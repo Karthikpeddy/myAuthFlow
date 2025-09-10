@@ -1,24 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
-const Signup = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSignup = async (e) => {
+  const handleForgotPassword = async (e) => {
     e.preventDefault();
-    setMessage(""); // clear old messages
+    setMessage("");
     try {
-      const res = await axios.post("http://localhost:5000/api/signup", {
+      const res = await axios.post("http://localhost:5000/api/forgot-password", {
         email,
-        password,
       });
-      if (res.status === 201) {
-        setMessage("✅ Signup successful! You can now log in.");
+
+      if (res.status === 200) {
+        setMessage("✅ Password reset link sent to your email.");
         setEmail("");
-        setPassword("");
       }
     } catch (err) {
       if (err.response?.data?.msg) {
@@ -33,14 +30,14 @@ const Signup = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm p-6 bg-white rounded-2xl shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          Create an Account
+          Forgot Password
         </h2>
 
-        <form onSubmit={handleSignup} className="space-y-5">
+        <form onSubmit={handleForgotPassword} className="space-y-5">
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
+              Enter your email
             </label>
             <input
               type="email"
@@ -52,49 +49,22 @@ const Signup = () => {
             />
           </div>
 
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-              minLength={6}
-            />
-          </div>
-
           {/* Submit */}
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-200"
           >
-            Sign Up
+            Send Reset Link
           </button>
         </form>
 
-        {/* Already have an account */}
-        <p className="mt-4 text-center text-sm text-gray-700">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-blue-600 hover:underline font-medium"
-          >
-            Log in
-          </Link>
-        </p>
-
         {/* Message */}
         {message && (
-          <p className="mt-3 text-center text-sm text-gray-700">{message}</p>
+          <p className="mt-4 text-center text-sm text-gray-700">{message}</p>
         )}
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default ForgotPassword;

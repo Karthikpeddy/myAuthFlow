@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -80,9 +81,30 @@ const Login = () => {
           </button>
         </form>
 
+        {/* Links */}
+        <div className="mt-4 text-center space-y-2 text-sm text-gray-700">
+          <p>
+            Don’t have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Sign up
+            </Link>
+          </p>
+          <p>
+            <Link
+              to="/forgot-password"
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Forgot Password?
+            </Link>
+          </p>
+        </div>
+
         {/* Message */}
         {message && (
-          <p className="mt-4 text-center text-sm text-gray-700">{message}</p>
+          <p className="mt-3 text-center text-sm text-gray-700">{message}</p>
         )}
       </div>
     </div>
